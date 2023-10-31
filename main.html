@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Digital Tanpura</title>
+	<style>
+		body {
+			background-color: #1a1a1a;
+			color: #fff;
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			margin-top: 50px;
+			text-align: center;
+		}
+
+    .container {
+			margin: 0 auto;
+			max-width: 600px;
+			padding: 20px;
+			border-radius: 20px;
+			background-image: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+			box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+		}
+    
+		select {
+			display: block;
+			margin: 20px auto;
+			padding: 10px;
+			border-radius: 20px;
+			background-color: #fff;
+			color: #000;
+			font-size: 16px;
+			border: none;
+			outline: none;
+            border-style:none; 
+            -webkit-appearance:none; 
+            -moz-appearance:none; 
+            appearance:none
+		}
+
+		button {
+			display: block;
+			margin: 20px auto;
+			padding: 10px 20px;
+			border-radius: 50px;
+			background-color: #fff;
+			color: #000;
+			font-size: 16px;
+			border: none;
+			outline: none;
+            cursor:pointer
+		}
+
+		button:hover {
+			background-color: #000;
+			color: #fff
+		}
+        
+        select {
+            border-radius:20px; 
+            padding-left:10px; 
+            font-size:16px; 
+            background-color:#fff; 
+            color:#000; 
+            border:none; 
+            outline:none; 
+            margin-top:-5px; 
+            margin-bottom:-5px
+        }
+        
+        select:focus {
+            outline:none
+        }
+        
+        option {
+            background-color:#fff; 
+            color:#000
+        }
+        
+        option:hover {
+            background-color:#000; 
+            color:#fff
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background-color:#ff416c;  
+          border-radius:6px
+        }
+        
+        ::-webkit-scrollbar-track {
+          background-color:#1a1a1a
+        }
+        
+        ::-webkit-scrollbar {
+          width:.5em
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background-color:#ff4b2b
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+    	<h1>Digital Tanpura</h1>
+
+    	<select id="audio-select">
+    		<option value="tanpura_c.mp3">C Scale</option>
+    		<option value="tanpura_c_sharp.mp3">C# Scale</option>
+    		<option value="tanpura_d.mp3">D Scale</option>
+    		<option value="tanpura_d_sharp.mp3">D# Scale</option>
+    		<option value="tanpura_e.mp3">E Scale</option>
+    		<option value="tanpura_f.mp3">F Scale</option>
+    		<option value="tanpura_f_sharp.mp3">F# Scale</option>
+    		<option value="tanpura_g.mp3">G Scale</option>
+    		<option value="tanpura_g_sharp.mp3">G# Scale</option>
+    		<option value="tanpura_a.mp3">A Scale</option>
+    		<option value="tanpura_a_sharp.mp3">A# Scale</option>
+    		<option value="tanpura_b.mp3">B Scale</option>
+    	</select>
+
+    	<button id="play-pause-button" onclick="playPause()">Play</button>
+
+    	<script type="text/javascript">
+    		var audioPlayer = new Audio();
+    		var audioSelect = document.getElementById("audio-select");
+    		var playPauseButton = document.getElementById("play-pause-button");
+
+    		function playPause() {
+    			if (audioPlayer.paused) {
+    				audioPlayer.src = audioSelect.value;
+    				audioPlayer.loop = true;
+    				audioPlayer.play();
+    				playPauseButton.innerHTML = "Pause";
+    			} else {
+    				audioPlayer.pause();
+    				playPauseButton.innerHTML = "Play";
+    			}
+    		}
+    	</script>
+    </div>
+    <head>
+      <style>
+      h1 {text-align: center;}
+      p {text-align: center;}
+      div {text-align: center;}
+      </style>
+      </head>
+      <body>
+      
+      <h1>To use this audio player:</h1>
+      <p>Select an audio file from the drop-down list.</p>
+      <div>Click on the play/pause button to play or pause the audio file.</div>
+      
+      </body>
+      </html>
+</body>
+</html>

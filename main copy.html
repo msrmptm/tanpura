@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      text-align: center;
+    }
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <select id="songSelect">
+      <option value="song1.mp3">Song 1</option>
+      <option value="song2.mp3">Song 2</option>
+      <option value="song3.mp3">Song 3</option>
+      <!-- Add more options here -->
+    </select>
+    <button class="button" id="playButton">Play</button>
+    <button class="button" id="pauseButton">Pause</button>
+    <button class="button" id="stopButton">Stop</button>
+  </div>
+  <script>
+    const songSelect = document.getElementById('songSelect');
+    const playButton = document.getElementById('playButton');
+    const pauseButton = document.getElementById('pauseButton');
+    const stopButton = document.getElementById('stopButton');
+    const audio = document.createElement('audio');
+
+    // Function to play the selected song
+    function playSong() {
+      const selectedSong = songSelect.options[songSelect.selectedIndex].value;
+      audio.src = selectedSong;
+      audio.loop = true;
+      audio.play();
+    }
+        // Function to pause the current song
+    function pauseSong() {
+      audio.pause();
+    }
+
+    // Function to stop the current song
+    function stopSong() {
+      audio.stop();
+    }
+
+    // Add event listeners to the buttons
+    playButton.onclick = playSong;
+    pauseButton.onclick = pauseSong;
+    stopButton.onclick = stopSong;
+
+    // Select the first song by default
+    songSelect.selectedIndex = 0;
+  </script>
+</body>
+</html>

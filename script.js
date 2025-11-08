@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
     const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-    // --- DOM Element References ---
+    // --- DOM Elements ---
     const noteSelector = document.getElementById('note-selector');
     const playPauseBtn = document.getElementById('play-pause-btn');
     const playIcon = document.getElementById('play-icon');
     const pauseIcon = document.getElementById('pause-icon');
-    const volumeSlider = document.getElementById('volume-slider'); // new
+    const volumeSlider = document.getElementById('volume-slider');
 
-    // --- Web Audio API Setup ---
+    // --- Web Audio Setup ---
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const gainNode = audioContext.createGain(); // new
+    const gainNode = audioContext.createGain();
     gainNode.gain.value = volumeSlider ? parseFloat(volumeSlider.value) : 0.7;
     gainNode.connect(audioContext.destination);
 
@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const clickedButton = event.currentTarget;
 
-        // visual highlight
         if (activeButton) activeButton.classList.remove('active');
         clickedButton.classList.add('active');
 
@@ -73,8 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
             currentSource.buffer = audioBuffer;
             currentSource.loop = true;
 
-            // connect to gain node, not directly to destination
+            // Ensure proper connection to the gain node every time
             currentSource.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
             currentSource.start(0);
 
             activeButton = buttonElement;
@@ -105,29 +106,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopAudio() {
         if (currentSource) {
-            currentSource.stop();
+            try {
+                currentSource.stop();
+            } catch (e) {
+                console.warn('Source already stopped.');
+            }
             currentSource = null;
         }
     }
 
     function updatePlayPauseButton(isPlaying) {
-        if (isPlaying) {
-            playIcon.style.display = 'none';
-            pauseIcon.style.display = 'block';
-        } else {
-            playIcon.style.display = 'block';
-            pauseIcon.style.display = 'none';
-        }
+        playIcon.style.display = isPlaying ? 'none' : 'block';
+        pauseIcon.style.display = isPlaying ? 'block' : 'none';
     }
 
-    // --- Volume Control ---
+    // --- Volume Control (live updates) ---
     if (volumeSlider) {
-        volumeSlider.addEventListener('input', () => {
-            gainNode.gain.value = parseFloat(volumeSlider.value);
+        volumeSlider.addEventListener('input', e => {
+            const value = parseFloat(e.target.value);
+            gainNode.gain.setTargetAtTime(value, audioContext.currentTime, 0.01);
         });
     }
 
-    // --- Initialisation ---
+    // --- Initialize ---
     createNoteButtons();
     playPauseBtn.addEventListener('click', handlePlayPause);
 });
